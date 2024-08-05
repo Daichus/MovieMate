@@ -1,4 +1,4 @@
-package org.example;
+package org.example.example;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -12,8 +12,10 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TheaterShowtimeQueryModule extends JPanel {
     private DefaultTableModel tableModel;
@@ -67,10 +69,6 @@ public class TheaterShowtimeQueryModule extends JPanel {
         JButton filterButton = new JButton("Filter");
         filterPanel.add(filterButton);
 
-        // 添加前往订票的按钮
-        JButton bookingButton = new JButton("Book Ticket");
-        filterPanel.add(bookingButton);
-
         add(filterPanel, BorderLayout.NORTH);
 
         // 添加返回按钮
@@ -100,17 +98,6 @@ public class TheaterShowtimeQueryModule extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 parentFrame.getContentPane().removeAll();
                 parentFrame.add(new MovieQueryGUI());
-                parentFrame.revalidate();
-                parentFrame.repaint();
-            }
-        });
-
-        // 前往订票按钮点击事件：切换到订票页面
-        bookingButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                parentFrame.getContentPane().removeAll();
-                parentFrame.add(new MovieTicketBooking(parentFrame));
                 parentFrame.revalidate();
                 parentFrame.repaint();
             }
