@@ -26,6 +26,9 @@ public class MovieQueryGUI extends JFrame {
         setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // 创建主面板
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
         // Setup table model
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Movie Name");
@@ -41,7 +44,7 @@ public class MovieQueryGUI extends JFrame {
 
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Search panel
         JPanel searchPanel = new JPanel();
@@ -66,7 +69,14 @@ public class MovieQueryGUI extends JFrame {
         JButton searchButton = new JButton("Search");
         searchPanel.add(searchButton);
 
-        add(searchPanel, BorderLayout.NORTH);
+        // 添加切换到影厅与场次查询模块的按钮
+        JButton switchModuleButton = new JButton("Switch to Theater and Showtime Query Module");
+        searchPanel.add(switchModuleButton);
+
+        mainPanel.add(searchPanel, BorderLayout.NORTH);
+
+        // 添加主面板到窗口
+        add(mainPanel);
 
         // 随机生成用户位置
         userLocation = generateRandomLocation();
@@ -82,6 +92,14 @@ public class MovieQueryGUI extends JFrame {
                 String genreQuery = genreField.getText().trim().toLowerCase();
                 String castQuery = castField.getText().trim().toLowerCase();
                 searchMovies(nameQuery, genreQuery, castQuery);
+            }
+        });
+
+        // 添加切换模块的功能
+        switchModuleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToTheaterShowtimeQueryModule();
             }
         });
 
@@ -204,6 +222,14 @@ public class MovieQueryGUI extends JFrame {
         }
         // 如果地址不匹配任何已知位置，默认返回最大优先级
         return Integer.MAX_VALUE;
+    }
+
+    // 切换到影厅与场次查询模块
+    private void switchToTheaterShowtimeQueryModule() {
+        getContentPane().removeAll();
+        add(new TheaterShowtimeQueryModule(this));
+        revalidate();
+        repaint();
     }
 
     public static void main(String[] args) {
